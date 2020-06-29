@@ -77,27 +77,12 @@ const ParticleImageDisplayer = function(tag_id, canvas_el, params) {
       click_x: null,
       click_y: null
     },
-    retina_detect: true
   };
 
   const pImg = this.pImageConfig;
-  if (params) Object.deepExtend(pImg, params);
-
-  pImg.tmp = {
-    particles: {
-      size: pImg.particles.size.value,
-      size_anim_speed: pImg.particles.size.animate.speed,
-      move_speed: pImg.particles.movement.speed,
-      restless_val: pImg.particles.movement.restless.value
-    },
-    retina: false,
-    retina_detect: pImg.retina_detect,
-    grab_distance: pImg.interactions.grab.distance,
-    repulse_distance: pImg.interactions.repulse.distance,
-    repulse_strength: pImg.interactions.repulse.strength,
-    big_repulse_distance: pImg.interactions.big_repulse.distance,
-    big_repulse_strength: pImg.interactions.big_repulse.distance
-  };
+  if (params) {
+    Object.deepExtend(pImg, params);
+  }
 
   /*
   ========================================
@@ -105,29 +90,10 @@ const ParticleImageDisplayer = function(tag_id, canvas_el, params) {
   ========================================
   */
   pImg.functions.canvas.init = function() {
-    pImg.functions.canvas.retinaInit();
     pImg.canvas.context = pImg.canvas.el.getContext('2d');
     pImg.canvas.el.width = pImg.canvas.w;
     pImg.canvas.el.height = pImg.canvas.h;
     window.addEventListener('resize', pImg.functions.utils.debounce(pImg.functions.canvas.onResize, 200));
-  };
-
-  pImg.functions.canvas.retinaInit = function() {
-    if (pImg.retina_detect && window.devicePixelRatio > 1) {
-      pImg.tmp.retina = true;
-      pImg.canvas.pxratio = window.devicePixelRatio;
-      pImg.canvas.w *= pImg.canvas.pxratio;
-      pImg.canvas.h *= pImg.canvas.pxratio;
-    }
-    pImg.particles.size.value = pImg.tmp.particles.size * pImg.canvas.pxratio;
-    pImg.particles.size.animate.speed = pImg.tmp.particles.size_anim_speed * pImg.canvas.pxratio;
-    pImg.particles.movement.speed = pImg.tmp.particles.move_speed * pImg.canvas.pxratio;
-    pImg.particles.movement.restless.value = pImg.tmp.particles.restless_val * pImg.canvas.pxratio;
-    pImg.interactions.grab.distance = pImg.tmp.grab_distance * pImg.canvas.pxratio;
-    pImg.interactions.repulse.distance = pImg.tmp.repulse_distance * pImg.canvas.pxratio;
-    pImg.interactions.repulse.strength = pImg.tmp.repulse_strength * pImg.canvas.pxratio;
-    pImg.interactions.big_repulse.distance = pImg.tmp.big_repulse_distance * pImg.canvas.pxratio;
-    pImg.interactions.big_repulse.strength = pImg.tmp.big_repulse_strength * pImg.canvas.pxratio;
   };
 
   pImg.functions.canvas.onResize = function() {
@@ -476,7 +442,7 @@ window.cancelRequestAnimFrame = (function() {
 
 window.pImgDom = [];
 
-window.particleImageDisplay = function(tag_id, params) {
+window.particleImageDisplay = function(tag_id) {
   // get target element by ID, check for existing canvases
   const pImage_el = document.getElementById(tag_id),
       canvas_classname = 'particle-image-canvas-el',
@@ -496,8 +462,23 @@ window.particleImageDisplay = function(tag_id, params) {
   canvas_el.style.height = "100%";
   const canvas = document.getElementById(tag_id).appendChild(canvas_el);
 
-  // launch display
+
   if(canvas != null){
-    pImgDom.push(new ParticleImageDisplayer(tag_id, params));
+    // get params.json filepath from load parameters from element's data-params-src property
+    const params_json = pImage_el.dataset.paramsSrc,
+      xhr = new XMLHttpRequest();
+    xhr.overrideMimeType("application/json")
+    xhr.open("GET", params_json, true);
+    xhr.onreadystatechange = function() {
+      if (xhr.readyState === 4 && xhr.status === 200) {
+        // parse parameters & launch display
+        const params = JSON.parse(xhr.responseText);
+        pImgDom.push(new ParticleImageDisplayer(tag_id, canvas, params));
+      } else {
+        console.log(`failed to load params.json. XMLHTTPRequest status: ${xhr.statusText}`);
+      }
+    };
   }
 };
+
+window.particleImageDisplay("particle-image");

@@ -1,58 +1,58 @@
 {
   "particles": {
-      "density": 200,
-      "color": "#fff",
-      "size": {
-        "value": 1,
-        "random": false
-      },
-      "movement": {
-        "speed": 1,
-        "restless": {
-          "enabled": false,
-          "value": 10,
-          "sync": false
-        }
-      },
-      "interactivity": {
-        "on_hover": {
-          "enabled": true,
-          "action": "repulse"
-        },
-        "on_click": {
-          "enabled": false,
-          "action": "big_repulse"
-        },
-        "on_touch": {
-          "enabled": true,
-          "action": "repulse"
-        }
+    "density": 200,
+    "color": "#fff",
+    "size": {
+      "value": 1,
+      "random": false
+    },
+    "movement": {
+      "speed": 1,
+      "restless": {
+        "enabled": false,
+        "value": 10,
+        "sync": false
       }
     },
-    "image": {
-      "src": {
-        "path": "https://blog.codepen.io/wp-content/uploads/2012/06/Button-Black-Large.png",
-        "is_external": true
+    "interactivity": {
+      "on_hover": {
+        "enabled": true,
+        "action": "repulse"
       },
-      "size": {
-        "width_pct": 60,
-        "min_width_px": 150,
-        "max_width_px": 800
+      "on_click": {
+        "enabled": false,
+        "action": "big_repulse"
+      },
+      "on_touch": {
+        "enabled": true,
+        "action": "repulse"
       }
+    }
+  },
+  "image": {
+    "src": {
+      "path": "https://blog.codepen.io/wp-content/uploads/2012/06/Button-Black-Large.png",
+      "is_external": true
     },
-    "interactions": {
-      "repulse": {
-        "distance": 100,
-        "strength": 200
-      },
-      "big_repulse": {
-        "distance": 100,
-        "strength": 500
-      },
-      "grab": {
-        "distance": 100,
-        "line_width": 1
-      }
+    "size": {
+      "width_pct": 60,
+      "min_width_px": 150,
+      "max_width_px": 800
+    }
+  },
+  "interactions": {
+    "repulse": {
+      "distance": 100,
+      "strength": 200
     },
-    "disabled": false
+    "big_repulse": {
+      "distance": 100,
+      "strength": 500
+    },
+    "grab": {
+      "distance": 100,
+      "line_width": 1
+    }
+  },
+  "disabled": false
 }
