@@ -1,8 +1,5 @@
-"use strict";
-
-particleImageDisplay('particle-animation',
-  {
-    "particles": {
+{
+  "particles": {
       "density": 200,
       "color": "#fff",
       "opactiy": {
@@ -27,7 +24,7 @@ particleImageDisplay('particle-animation',
         "on_touch": {
           "enabled": true,
           "action": "repulse"
-        },
+        }
       }
     },
     "image": {
@@ -45,5 +42,4 @@ particleImageDisplay('particle-animation',
     },
     "retina_detect": false,
     "disabled": false
-  }
-);
+}
