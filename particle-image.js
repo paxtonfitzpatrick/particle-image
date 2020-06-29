@@ -3,10 +3,10 @@ const ParticleImageDisplayer = function(tag_id, canvas_el, params) {
   this.pImageConfig = {
     particles: {
       array: [],
-      density: 200,
+      density: 100,
       color: '#fff',
       size: {
-        value: 5,
+        value: 2,
         random: false,
       },
       movement: {
@@ -177,13 +177,6 @@ const ParticleImageDisplayer = function(tag_id, canvas_el, params) {
       this.color = pImg.particles.color;
     }
     this.radius = Math.round((pImg.particles.size.random ? Math.max(Math.random(), 0.5) : 1) * pImg.particles.size.value);
-    if (pImg.particles.size.animate.enabled) {
-      this.grow = false;
-      this.resize_speed = pImg.particles.size.animate.speed / 100;
-      if (!pImg.particles.size.animate.sync) {
-        this.resize_speed *= Math.random();
-      }
-    }
   };
 
   pImg.functions.particles.SingleImageParticle.prototype.draw = function() {
@@ -220,9 +213,7 @@ const ParticleImageDisplayer = function(tag_id, canvas_el, params) {
         p.x += p.vx;
         p.y += p.vy;
       }
-      if (pImg.particles.size.animate.enabled) {
-        pImg.functions.particles.updateParticleSize(p);
-      }
+
       pImg.functions.interactivity.interactWithClient(p);
     }
   };
@@ -232,23 +223,6 @@ const ParticleImageDisplayer = function(tag_id, canvas_el, params) {
     p.y += p.restlessness.y_jitter;
     if (Math.sqrt((p.dest_x - p.x) ** 2 + (p.dest_y - p.y) ** 2) >= pImg.particles.movement.restless.value) {
       p.restlessness.on_curr_frame = false;
-    }
-  };
-
-  pImg.functions.particles.updateParticleSize = function(p) {
-    if (p.grow) {
-      p.radius += p.resize_speed;
-      if (p.radius >= pImg.particles.size.value) {
-        p.grow = false;
-      }
-    } else {
-      p.radius -= p.resize_speed;
-      if (p.radius <= pImg.particles.size.animate.min) {
-        p.grow = true;
-      }
-    }
-    if (p.radius < 0) {
-      p.radius = 0;
     }
   };
 
@@ -285,16 +259,13 @@ const ParticleImageDisplayer = function(tag_id, canvas_el, params) {
           dy_mouse = p.y - pImg.mouse.y,
           mouse_dist = Math.sqrt(dx_mouse * dx_mouse + dy_mouse * dy_mouse);
     if (mouse_dist <= args.distance) {
-      const opacity = args.line_opacity - (mouse_dist / (1 / args.line_opacity)) - args.distance;
-      if (opacity > 0) {
-        pImg.canvas.context.strokeStyle = p.color;
-        pImg.canvas.context.lineWidth = Math.min(args.line_width, p.radius * 2);
-        pImg.canvas.context.beginPath();
-        pImg.canvas.context.moveTo(p.x, p.y);
-        pImg.canvas.context.lineTo(pImg.mouse.x, pImg.mouse.y);
-        pImg.canvas.context.stroke();
-        pImg.canvas.context.closePath();
-      }
+      pImg.canvas.context.strokeStyle = p.color;
+      pImg.canvas.context.lineWidth = Math.min(args.line_width, p.radius * 2);
+      pImg.canvas.context.beginPath();
+      pImg.canvas.context.moveTo(p.x, p.y);
+      pImg.canvas.context.lineTo(pImg.mouse.x, pImg.mouse.y);
+      pImg.canvas.context.stroke();
+      pImg.canvas.context.closePath();
     }
   };
 
@@ -307,8 +278,6 @@ const ParticleImageDisplayer = function(tag_id, canvas_el, params) {
   pImg.functions.interactivity.onMouseClick = function(func, args, p) {
     if (pImg.mouse.click_x != null && pImg.mouse.click_y != null) {
       func(p, args);
-      pImg.mouse.click_x = null;
-      pImg.mouse.click_y = null;
     }
   };
 
@@ -327,9 +296,13 @@ const ParticleImageDisplayer = function(tag_id, canvas_el, params) {
       pImg.functions.utils.addEventActions('on_hover');
     }
     if (pImg.particles.interactivity.on_click.enabled) {
-      pImg.canvas.el.addEventListener('click', function(e) {
+      pImg.canvas.el.addEventListener('mousedown', function(e) {
         pImg.mouse.click_x = pImg.mouse.x;
         pImg.mouse.click_y = pImg.mouse.y;
+      });
+      pImg.canvas.el.addEventListener('mouseup', function(e) {
+        pImg.mouse.click_x = null;
+        pImg.mouse.click_y = null;
       });
       pImg.functions.utils.addEventActions('on_click');
     }
