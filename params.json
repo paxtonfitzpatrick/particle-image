@@ -2,15 +2,17 @@
   "particles": {
       "density": 200,
       "color": "#fff",
-      "opactiy": {
-        "value": 1
-      },
       "size": {
         "value": 1,
-        "random": false,
+        "random": false
       },
       "movement": {
         "speed": 1,
+        "restless": {
+          "enabled": false,
+          "value": 10,
+          "sync": false
+        }
       },
       "interactivity": {
         "on_hover": {
@@ -28,18 +30,29 @@
       }
     },
     "image": {
+      "src": {
+        "path": "https://blog.codepen.io/wp-content/uploads/2012/06/Button-Black-Large.png",
+        "is_external": true
+      },
       "size": {
         "width_pct": 60,
-        "min_px": 150,
-        "max_px": 800
+        "min_width_px": 150,
+        "max_width_px": 800
       }
     },
     "interactions": {
       "repulse": {
         "distance": 100,
         "strength": 200
+      },
+      "big_repulse": {
+        "distance": 100,
+        "strength": 500
+      },
+      "grab": {
+        "distance": 100,
+        "line_width": 1
       }
     },
-    "retina_detect": false,
     "disabled": false
 }
