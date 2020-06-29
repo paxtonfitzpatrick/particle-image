@@ -142,7 +142,12 @@ const ParticleImageDisplayer = function(tag_id, canvas_el, params) {
       pImg.functions.particles.createImageParticles(img_pixels);
       pImg.functions.particles.animateParticles();
     });
-    pImg.image.obj.src = pImg.image.src.is_external ? `https://cors-anywhere.herokuapp.com/${pImg.image.src.path}` : pImg.image.src.path;
+    let src_path = pImg.image.src.path;
+    if (pImg.image.src.is_external) {
+      src_path = `https://cors-anywhere.herokuapp.com/${pImg.image.src.path}`;
+      pImg.image.obj.crossOrigin = "anonymous";
+    }
+    pImg.image.obj.src = src_path;
   };
 
   /*
@@ -468,7 +473,7 @@ window.particleImageDisplay = function(tag_id) {
     const params_json = pImage_el.dataset.paramsSrc,
       xhr = new XMLHttpRequest();
     xhr.overrideMimeType("application/json")
-    xhr.open("GET", params_json, true);
+    xhr.open("GET", params_json, false);
     xhr.onreadystatechange = function() {
       if (xhr.readyState === 4 && xhr.status === 200) {
         // parse parameters & launch display
@@ -478,6 +483,7 @@ window.particleImageDisplay = function(tag_id) {
         console.log(`failed to load params.json. XMLHTTPRequest status: ${xhr.statusText}`);
       }
     };
+    xhr.send();
   }
 };
 
