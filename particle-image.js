@@ -1,32 +1,13 @@
-const ParticleImageDisplayer = function(tag_id, params) {
+const ParticleImageDisplayer = function(tag_id, canvas_el, params) {
   "use strict";
-  // get canvas element
-  const canvas_el = document.querySelector('#' + tag_id + ' > .particle-image-canvas-el');
-
   this.pImageConfig = {
     particles: {
       array: [],
-      density: 300,
+      density: 200,
       color: '#fff',
-      opacity: {
-        value: 1,
-        random: false,
-        animate: {
-          enabled: false,
-          speed: 1,
-          min: 0,
-          sync: false
-        }
-      },
       size: {
         value: 5,
         random: false,
-        animate: {
-          enabled: false,
-          speed: 20,
-          min: 0,
-          sync: false
-        }
       },
       movement: {
         speed: 1,
@@ -53,27 +34,28 @@ const ParticleImageDisplayer = function(tag_id, params) {
       }
     },
     image: {
-      x: 0,
-      y: 0,
+      src: {
+        path: null,
+        is_external: false
+      },
       size: {
-        width_pct: 40,
-        min_px: 50,
-        max_px: 400
+        width_pct: 60,
+        min_width_px: 50,
+        max_width_px: 800
       }
     },
     interactions: {
       repulse: {
         distance: 100,
-        strength: 100
+        strength: 200
       },
       big_repulse: {
         distance: 100,
-        strength: 100
+        strength: 500
       },
       grab: {
         distance: 100,
         line_width: 1,
-        line_opacity: 1
       }
     },
     canvas: {
@@ -178,7 +160,7 @@ const ParticleImageDisplayer = function(tag_id, params) {
   */
   pImg.functions.image.resize = function() {
     // resize the image and set x,y coords to align in the center of the canvas
-    pImg.image.obj.width = pImg.functions.utils.clamp(Math.round(pImg.canvas.w * pImg.image.size.width_pct / 100), pImg.image.size.min_px, pImg.image.size.max_px);
+    pImg.image.obj.width = pImg.functions.utils.clamp(Math.round(pImg.canvas.w * pImg.image.size.width_pct / 100), pImg.image.size.min_width_px, pImg.image.size.max_width_px);
     pImg.image.obj.height = Math.round(pImg.image.obj.width * pImg.image.ratio);
     pImg.image.x = pImg.canvas.w  / 2 - pImg.image.obj.width / 2;
     pImg.image.y = pImg.canvas.h / 2 - pImg.image.obj.width / 2;
@@ -194,7 +176,7 @@ const ParticleImageDisplayer = function(tag_id, params) {
       pImg.functions.particles.createImageParticles(img_pixels);
       pImg.functions.particles.animateParticles();
     });
-    pImg.image.obj.src = pImg.src_path;
+    pImg.image.obj.src = pImg.image.src.is_external ? `https://cors-anywhere.herokuapp.com/${pImg.image.src.path}` : pImg.image.src.path;
   };
 
   /*
@@ -513,11 +495,6 @@ window.particleImageDisplay = function(tag_id, params) {
   canvas_el.style.width = "100%";
   canvas_el.style.height = "100%";
   const canvas = document.getElementById(tag_id).appendChild(canvas_el);
-
-  // get image to be "particlized" from element dataobject
-  if(pImage_el.hasAttribute("data-img")){
-    params.src_path = pImage_el.getAttribute("data-img");
-  }
 
   // launch display
   if(canvas != null){
