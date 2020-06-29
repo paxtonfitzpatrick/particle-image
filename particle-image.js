@@ -39,9 +39,9 @@ const ParticleImageDisplayer = function(tag_id, canvas_el, params) {
         is_external: false
       },
       size: {
-        width_pct: 60,
-        min_width_px: 50,
-        max_width_px: 800
+        canvas_pct: 60,
+        min_px: 50,
+        max_px: 800
       }
     },
     interactions: {
@@ -61,8 +61,7 @@ const ParticleImageDisplayer = function(tag_id, canvas_el, params) {
     canvas: {
       el: canvas_el,
       w: canvas_el.offsetWidth,
-      h: canvas_el.offsetHeight,
-      pxratio: 1
+      h: canvas_el.offsetHeight
     },
     functions: {
       particles: {},
@@ -93,14 +92,16 @@ const ParticleImageDisplayer = function(tag_id, canvas_el, params) {
     pImg.canvas.context = pImg.canvas.el.getContext('2d');
     pImg.canvas.el.width = pImg.canvas.w;
     pImg.canvas.el.height = pImg.canvas.h;
+    pImg.canvas.aspect_ratio = pImg.canvas.w / pImg.canvas.h;
     window.addEventListener('resize', pImg.functions.utils.debounce(pImg.functions.canvas.onResize, 200));
   };
 
   pImg.functions.canvas.onResize = function() {
-    pImg.canvas.w = pImg.canvas.el.offsetWidth * pImg.canvas.pxratio;
-    pImg.canvas.h = pImg.canvas.el.offsetHeight * pImg.canvas.pxratio;
+    pImg.canvas.w = pImg.canvas.el.offsetWidth;
+    pImg.canvas.h = pImg.canvas.el.offsetHeight;
     pImg.canvas.el.width = pImg.canvas.w;
     pImg.canvas.el.height = pImg.canvas.h;
+    pImg.canvas.aspect_ratio = pImg.canvas.w / pImg.canvas.h;
     pImg.particles.array = [];
     pImg.functions.image.resize();
     const image_pixels = pImg.functions.canvas.getImagePixels();
@@ -125,9 +126,16 @@ const ParticleImageDisplayer = function(tag_id, canvas_el, params) {
   ========================================
   */
   pImg.functions.image.resize = function() {
-    // resize the image and set x,y coords to align in the center of the canvas
-    pImg.image.obj.width = pImg.functions.utils.clamp(Math.round(pImg.canvas.w * pImg.image.size.width_pct / 100), pImg.image.size.min_width_px, pImg.image.size.max_width_px);
-    pImg.image.obj.height = Math.round(pImg.image.obj.width * pImg.image.ratio);
+    if (pImg.image.aspect_ratio < pImg.canvas.aspect_ratio) {
+      // canvas height constrains image size
+      pImg.image.obj.height = pImg.functions.utils.clamp(Math.round(pImg.canvas.h * pImg.image.size.canvas_pct / 100), pImg.image.size.min_px, pImg.image.size.max_px);
+      pImg.image.obj.width = Math.round(pImg.image.obj.height * pImg.image.aspect_ratio);
+    } else {
+      // canvas width constrains image size
+      pImg.image.obj.width = pImg.functions.utils.clamp(Math.round(pImg.canvas.w * pImg.image.size.canvas_pct / 100), pImg.image.size.min_px, pImg.image.size.max_px);
+      pImg.image.obj.height = Math.round(pImg.image.obj.width / pImg.image.aspect_ratio);
+    }
+    // set x,y coords to center image on canvas
     pImg.image.x = pImg.canvas.w  / 2 - pImg.image.obj.width / 2;
     pImg.image.y = pImg.canvas.h / 2 - pImg.image.obj.width / 2;
   };
@@ -136,7 +144,7 @@ const ParticleImageDisplayer = function(tag_id, canvas_el, params) {
     pImg.image.obj = new Image();
     pImg.image.obj.addEventListener('load', function() {
       // get aspect ratio (only have to compute once on initial load)
-      pImg.image.ratio = pImg.image.obj.height / pImg.image.obj.width;
+      pImg.image.aspect_ratio = pImg.image.obj.width / pImg.image.obj.height;
       pImg.functions.image.resize();
       const img_pixels = pImg.functions.canvas.getImagePixels();
       pImg.functions.particles.createImageParticles(img_pixels);
@@ -286,8 +294,8 @@ const ParticleImageDisplayer = function(tag_id, canvas_el, params) {
       pImg.canvas.el.addEventListener('mousemove', function(e) {
         let pos_x = e.offsetX || e.clientX,
             pos_y = e.offsetY || e.clientY;
-        pImg.mouse.x = pos_x * pImg.canvas.pxratio;
-        pImg.mouse.y = pos_y * pImg.canvas.pxratio;
+        pImg.mouse.x = pos_x;
+        pImg.mouse.y = pos_y;
       });
       pImg.canvas.el.addEventListener('mouseleave', function(e) {
         pImg.mouse.x = null;
@@ -310,8 +318,8 @@ const ParticleImageDisplayer = function(tag_id, canvas_el, params) {
       pImg.canvas.el.addEventListener('touchmove', function(e) {
         let pos_x = e.touches[0].clientX,
             pos_y = e.touches[0].clientY;
-        pImg.mouse.x = pos_x * pImg.canvas.pxratio;
-        pImg.mouse.y = pos_y * pImg.canvas.pxratio;
+        pImg.mouse.x = pos_x;
+        pImg.mouse.y = pos_y;
       });
       pImg.canvas.el.addEventListener('touchend', function(e) {
         pImg.mouse.x = null;
