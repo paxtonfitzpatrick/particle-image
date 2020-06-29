@@ -137,7 +137,7 @@ const ParticleImageDisplayer = function(tag_id, canvas_el, params) {
     }
     // set x,y coords to center image on canvas
     pImg.image.x = pImg.canvas.w  / 2 - pImg.image.obj.width / 2;
-    pImg.image.y = pImg.canvas.h / 2 - pImg.image.obj.width / 2;
+    pImg.image.y = pImg.canvas.h / 2 - pImg.image.obj.height / 2;
   };
 
   pImg.functions.image.init = function() {
