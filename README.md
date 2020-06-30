@@ -1,13 +1,13 @@
 # particle-image
 #### _particlized image animation in vanilla JavaScript_
 
-## Demos:
+# Demos:
 CodePen: https://codepen.io/paxtonfitzpatrick/pen/GRoMQgb
 
 My personal website: https://paxtonfitzpatrick.github.io/
 
 
-## Usage
+# Usage
 1. Create an HTML element where you want your particle animation to appear, and supply it with two attributes:
    * `id`: a unique ID the script will use to identify the div. The default is `particle-image`, but you can change
     this by editing the last line of `particle-image.js`.
@@ -44,7 +44,7 @@ My personal website: https://paxtonfitzpatrick.github.io/
  with the parameters on [CodePen](https://codepen.io/paxtonfitzpatrick/pen/GRoMQgb)!)
  
  
-## Options
+# Options
 Field | Value type | Description
 ----|----|---------
 `particles.density` | `number` | density of the particles comprising the image
@@ -72,3 +72,8 @@ Field | Value type | Description
 `interactions.grab.distance` | `number` | maximum distance for the "grab" interaction
 `interactions.grab.line_width` | `number` | with of lines formed by the "grab" interaction. Constrained to be at most the particle's diameter
 `disabled` | `boolean` | if `true`, don't create the particle animation. Useful when debugging locally
+
+# Credits
+This work was heavily inspired by 
+[Vincent Garreau's `particles.js`](https://github.com/VincentGarreau/particles.js) and 
+[Louis Hoebregt's Text to particles](https://codepen.io/Mamboleoo/pen/obWGYr)
