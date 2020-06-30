@@ -14,7 +14,6 @@ const ParticleImageDisplayer = function(tag_id, canvas_el, params) {
         restless: {
           enabled: false,
           value: 10,
-          sync: false
         }
       },
       interactivity: {
