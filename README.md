@@ -40,5 +40,35 @@ My personal website: https://paxtonfitzpatrick.github.io/
     }
     ```
 
-3. Adjust the parameters in `params.json` as you see fit. See the **`options`** table below for reference (and play
+3. Adjust the parameters in `params.json` as you see fit. See the **options** table below for reference (and play
  with the parameters on [CodePen](https://codepen.io/paxtonfitzpatrick/pen/GRoMQgb)!)
+ 
+ 
+## Options
+Field | Value type | Description
+----|----|---------
+`particles.density` | `number` | density of the particles comprising the image
+`particles.color` | `HEX (string)` | color of the particles comprising the image
+`particles.size.value` | `number` | size of each particle (expressed as its radius)
+`particles.size.random` | `boolean` | if `true`, particles are randomly drawn with radii between 50% and 100% of `particles.size.value`
+`particles.movement.speed` | `number` | movement speed of the particles. Particles are randomly assigned initial x- and y-velocities between -0.5 and 0.5 times this value.
+`particles.movement.restless.enabled` | `boolean` | if `true`, particles will randomly "jitter" when undisturbed after reaching their destination
+`particles.movement.restless.value` | `number` | maximum distance (in pixels) restless particles will move from their assigned location
+`particles.interactivity.on_hover.enabled` | `boolean` | if `true`, particles will respond to mouse hovering with the given `action`
+`particles.interactivity.on_hover.action` | `string: {"repulse", "big_repulse", "grab"}` | the particles' reaction in response to mouse hovering
+`particles.interactivity.on_click.enabled` | `boolean` | if `true`, particles will respond to mouse presses with the given `action`
+`particles.interactivity.on_hover.action` | `string: {"repulse", "big_repulse", "grab"}` | the particles' reaction in response to mouse presses
+`particles.interactivity.on_touch.enabled` | `boolean` | if `true`, particles will respond to screen touches (on mobile) with the given `action`
+`particles.interactivity.on_hover.action` | `string: {"repulse", "big_repulse", "grab"}` | the particles' reaction in response to screen touches
+`image.src.path` | `string` | path or URL to the image to be "particlized" (may be local or external)
+`image.src.is_external` | `boolean` | set to `true` when loading an external image to enable cross-origin requests via CORS-anywhere
+`image.size.canvas_pct` | `number` | percentage of the smallest canvas dimension (height or width) that the image will fill
+`image.size.max_px` | `number` | maximum size of the image (overrides `canvas_pct` for very large canvases), in pixels
+`image.size.min_px` | `number` | minimum size of the image (overrides `canvas_pct` for very small canvases), in pixels
+`interactions.repulse.distance` | `number` | maximum distance for the repulsion interaction
+`interactions.repulse.strength` | `number` | "force" of the repulsion interaction
+`interactions.big_repulse.distance` | `number` | maximum distance for the "big repulsion"  interaction
+`interactions.big_repulse.strength` | `number` | "force" of the "big repulsion" interaction
+`interactions.grab.distance` | `number` | maximum distance for the "grab" interaction
+`interactions.grab.line_width` | `number` | with of lines formed by the "grab" interaction. Constrained to be at most the particle's diameter
+`disabled` | `boolean` | if `true`, don't create the particle animation. Useful when debugging locally
