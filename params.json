@@ -10,8 +10,7 @@
       "speed": 1,
       "restless": {
         "enabled": false,
-        "value": 10,
-        "sync": false
+        "value": 10
       }
     },
     "interactivity": {
