@@ -149,12 +149,10 @@ const ParticleImageDisplayer = function(tag_id, canvas_el, params) {
       pImg.functions.particles.createImageParticles(img_pixels);
       pImg.functions.particles.animateParticles();
     });
-    let src_path = pImg.image.src.path;
+    pImg.image.obj.src = pImg.image.src.path;
     if (pImg.image.src.is_external) {
-      src_path = `https://cors-anywhere.herokuapp.com/${pImg.image.src.path}`;
       pImg.image.obj.crossOrigin = "anonymous";
     }
-    pImg.image.obj.src = src_path;
   };
 
   /*

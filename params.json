@@ -30,7 +30,7 @@
   },
   "image": {
     "src": {
-      "path": "https://blog.codepen.io/wp-content/uploads/2012/06/Button-Black-Large.png",
+      "path": "https://raw.githubusercontent.com/paxtonfitzpatrick/particle-image/master/codepen-logo-demo.png",
       "is_external": true
     },
     "size": {
