@@ -61,7 +61,7 @@ Field | Value type | Description
 `particles.interactivity.on_touch.enabled` | `boolean` | if `true`, particles will respond to screen touches (on mobile) with the given `action`
 `particles.interactivity.on_hover.action` | `string: {"repulse", "big_repulse", "grab"}` | the particles' reaction in response to screen touches
 `image.src.path` | `string` | path or URL to the image to be "particlized" (may be local or external)
-`image.src.is_external` | `boolean` | set to `true` when loading an external image to enable cross-origin requests via CORS-anywhere
+`image.src.is_external` | `boolean` | set to `true` when loading an external image to set the iamge object's `crossorigin` attribute to "anonymous"
 `image.size.canvas_pct` | `number` | percentage of the smallest canvas dimension (height or width) that the image will fill
 `image.size.max_px` | `number` | maximum size of the image (overrides `canvas_pct` for very large canvases), in pixels
 `image.size.min_px` | `number` | minimum size of the image (overrides `canvas_pct` for very small canvases), in pixels
