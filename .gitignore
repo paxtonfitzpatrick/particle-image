@@ -1,5 +1,8 @@
-# Mac Finder layout config files
+# Mac Finder layout config
 *.DS_Store
 
-# PyCharm project config files
+# PyCharm project config
 .idea
+
+# VSCode project config
+*.vscode
