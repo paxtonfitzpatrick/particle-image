@@ -4,9 +4,9 @@
 
 ## Demos
 
-CodePen: <https://codepen.io/paxtonfitzpatrick/pen/GRoMQgb>
+CodePen: **<https://codepen.io/paxtonfitzpatrick/pen/GRoMQgb>**
 
-My personal website: <https://paxtonfitzpatrick.github.io/>
+My personal website: **[paxtonfitzpatrick.me](https://paxtonfitzpatrick.me)**
 
 ## Usage
 
@@ -20,6 +20,7 @@ My personal website: <https://paxtonfitzpatrick.github.io/>
     ```
 
 2. Reference the script under your `<head>` tag *with the `defer` attribute*.
+
    **Notes**:
     * Because `particle-image.js` queries the DOM, it should not be loaded with `async`, or your
       `#particle-image` element may not exist at runtime.
@@ -84,5 +85,5 @@ My personal website: <https://paxtonfitzpatrick.github.io/>
 ## Credits
 
 This work was heavily inspired by
-[Vincent Garreau's `particles.js`](https://github.com/VincentGarreau/particles.js) and
-[Louis Hoebregt's Text to particles](https://codepen.io/Mamboleoo/pen/obWGYr)
+[Vincent Garreau](https://github.com/VincentGarreau)'s [`particles.js`](https://github.com/VincentGarreau/particles.js) and
+[Louis Hoebregt](https://github.com/Mamboleoo)'s [Text to particles](https://codepen.io/Mamboleoo/pen/obWGYr)
